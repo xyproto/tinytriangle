@@ -2,24 +2,19 @@
 /*
  * Noisy Triangle
  * A skeleton for 4k intros for Linux
- * Now trying to use Go and gccgo!
  *
  * Alexander Rødseth <rodseth@gmail.com>
  * ZLIB licensed
  *
  */
 
-/*
 #include "GL/gl.h"
 #include "SDL/SDL.h"
 #include "alsa/asoundlib.h"
-*/
 
-//extern add
-func add(a, b int) int
-
-// extern c_open
-func quit()
+/* Assembly functions */
+extern int add(int a, int b);
+extern void quit();
 
 /* Used for audio */
 static char *device = "default";
