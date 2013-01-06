@@ -3,10 +3,10 @@ NAME = tinytriangle
 # -fshort-double makes OpenGL stop working for some reason
 # try both -Os and -O1 to see what produces the smallest result
 CFLAGS = -Os -ffast-math -fno-inline -fomit-frame-pointer -nostdlib #-fpeephole2  -fexpensive-optimizations
-SOURCES = util.s main.c
+SOURCES = util.s main.go
 OBJS = util.o main.o
 HEADERSCRIPT = header.sh
-CC = clang #gcc
+CC = gccgo
 
 UNAMEM := $(shell uname -m)
 ifeq ($(UNAMEM),x86_64)
@@ -18,12 +18,14 @@ endif
 all: m32on64
 
 m32on64: ${SOURCES}
-	${CC} -m32 ${CFLAGS} -c ${SOURCES}
+	${CC} -m32 ${CFLAGS} -c util.s
+	${CC} -m32 ${CFLAGS} -c main.go
 	ld -melf_i386 -dynamic-linker /lib/ld-linux.so.2 ${OBJS} /usr/lib32/libSDL.so /usr/lib32/libGL.so /usr/lib32/libpthread.so /usr/lib32/libc.so /usr/lib32/libasound.so -o ${NAME}.elf
 	@make ${NAME}
 
 native: ${SOURCES}
-	${CC} ${CFLAGS} -c ${SOURCES}
+	${CC} ${CFLAGS} -c util.s
+	${CC} ${CFLAGS} -c main.go
 	ld -dynamic-linker ${LDLINUX} ${OBJS} /usr/lib/libSDL.so /usr/lib/libGL.so /usr/lib/libpthread.so /lib/libc.so.6 /usr/lib/libasound.so -o ${NAME}.elf
 	@make ${NAME}
 
