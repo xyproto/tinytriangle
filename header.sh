@@ -1,1 +1,1 @@
-x=/dev/shm/x;dd bs=1 skip=82 if=$0 of=$x.xz 2>$x;xz -df $x.xz;chmod +x $x;$x;exit
+x=/dev/shm/x;dd bs=1 skip=87 if=$0 of=$x.bz2 2>$x;bzip2 -df $x.bz2;chmod +x $x;$x;exit

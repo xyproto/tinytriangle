@@ -1,11 +1,17 @@
-Tiny Triangle
-=============
+Differences for the Red Hat edition:
 
+* Tries to depend on X11 and GL instead of SDL
+* Tries to depend on bzip2 instead of xz
+
+---
+
+Noisy Triangle
 A skeleton for 4k intros on Linux
 
 Uses ALSA for audio and SDL+OpenGL for graphics.
-Executable ends up at 1378 bytes at the time of writing.
-(Slightly larger if compiled with gcc instead of clang).
+Executable ends up at 1422 bytes at the time of writing.
+
+Alexander Rødseth <rodseth@gmail.com>
 
 Resources:
     http://www.int21.de/linux4k/
@@ -54,8 +60,4 @@ About unpackme.sh:
     $x
 	runs the executable ELF at /dev/shm/x
 
-ZLIB licensed
-
-Improvements? Comments? Send me an e-mail or create an issue
-
-Alexander Rødseth <rodseth@gmail.com>
+Improvements? Comments? Send me an e-mail.
