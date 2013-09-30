@@ -6,7 +6,7 @@ CFLAGS = -Os -ffast-math -fno-inline -fomit-frame-pointer -nostdlib #-fpeephole2
 SOURCES = util.s main.c
 OBJS = util.o main.o
 HEADERSCRIPT = header.sh
-CC = clang #gcc
+CC = gcc
 
 UNAMEM := $(shell uname -m)
 ifeq ($(UNAMEM),x86_64)
@@ -15,23 +15,23 @@ else
     LDLINUX = /lib/ld-linux.so.2
 endif
 
-all: m32on64
+all: native
 
 m32on64: ${SOURCES}
 	${CC} -m32 ${CFLAGS} -c ${SOURCES}
-	ld -melf_i386 -dynamic-linker /lib/ld-linux.so.2 ${OBJS} /usr/lib32/libSDL.so /usr/lib32/libGL.so /usr/lib32/libpthread.so /usr/lib32/libc.so /usr/lib32/libasound.so -o ${NAME}.elf
+	ld -melf_i386 -dynamic-linker /lib/ld-linux.so.2 ${OBJS} /usr/lib32/libSDL.so /usr/lib32/libGL.so /usr/lib32/libpthread.so /usr/lib32/libc.so /usr/lib32/libasound.so /usr/lib/libm.so -o ${NAME}.elf
 	@make ${NAME}
 
 native: ${SOURCES}
 	${CC} ${CFLAGS} -c ${SOURCES}
-	ld -dynamic-linker ${LDLINUX} ${OBJS} /usr/lib/libSDL.so /usr/lib/libGL.so /usr/lib/libpthread.so /lib/libc.so.6 /usr/lib/libasound.so -o ${NAME}.elf
+	ld -dynamic-linker ${LDLINUX} ${OBJS} /usr/lib/libSDL.so /usr/lib/libGL.so /usr/lib/libpthread.so /lib/libc.so.6 /usr/lib/libasound.so /usr/lib/libm.so -o ${NAME}.elf
 	@make ${NAME}
 
 ${NAME}: ${NAME}.elf
 	strip -s -R .comment -R .gnu.version ${NAME}.elf
 	sstrip ${NAME}.elf
 	cat ${HEADERSCRIPT} > ${NAME}
-	xz -zc9e ${NAME}.elf >> ${NAME}
+	xz -zc7e ${NAME}.elf >> ${NAME}
 	chmod -x ${NAME}.elf
 	chmod +x ${NAME}
 
