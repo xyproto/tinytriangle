@@ -2,7 +2,8 @@ NAME = tinytriangle
 
 # -fshort-double makes OpenGL stop working for some reason
 # try both -Os and -O1 to see what produces the smallest result
-CFLAGS = -Os -ffast-math -fno-inline -fomit-frame-pointer -nostdlib -fpeephole2 -fexpensive-optimizations
+CFLAGS = -Os #-ffast-math -fno-inline -fomit-frame-pointer -nostdlib -fpeephole2 -fexpensive-optimizations
+CFLAGS = -O1 -g
 SOURCES = util.s main.c
 OBJS = util.o main.o
 HEADERSCRIPT = header.sh
@@ -36,6 +37,9 @@ else
 endif
 
 all: native
+
+debug:
+	gcc debug.c -o main -lXxf86vm -lX11 -lGL -lGLU -lasound
 
 m32on64: ${SOURCES} ${LIB32FILES}
 	${CC} -m32 ${CFLAGS} -c ${SOURCES}
