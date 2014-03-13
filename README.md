@@ -1,10 +1,10 @@
 Tiny Triangle
 =============
 
-A skeleton for 4k intros on Linux
+Skeleton for 4k intros on Linux
 
-Uses ALSA for audio and SDL+OpenGL for graphics.
-Executable ends up at 1378 bytes at the time of writing.
+Uses ALSA for audio and SDL2+OpenGL for graphics.
+Executable ends up at ? bytes at the time of writing.
 (Slightly larger if compiled with gcc instead of clang).
 
 Resources:
@@ -19,7 +19,7 @@ Building the 32-bit version on x86_64 for x86_64:
     Requirements:
         elfkicker (only used in the build process)
         xz
-        lib32-sdl
+        lib32-sdl2
         lib32-glibc
         lib32-nvidia-utils (or lib32-libgl)
         lib32-alsa-lib
@@ -30,7 +30,7 @@ Building the native version (32-bit for i686, 64-bit for x86_64):
     Requirements:
         elfkicker (only used in the build process)
         xz
-        sdl
+        sdl2
         glibc
         nvidia-utils (or libgl)
         alsa-lib

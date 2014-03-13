@@ -1,4 +1,5 @@
 NAME = tinytriangle
+BITS:=$(shell getconf LONG_BIT)
 
 # -fshort-double makes OpenGL stop working for some reason
 # try both -Os and -O1 to see what produces the smallest result
@@ -15,16 +16,20 @@ else
     LDLINUX = /lib/ld-linux.so.2
 endif
 
-all: m32on64
+all: m$(BITS)
+
+m64: native m32on64
+
+m32: native
 
 m32on64: ${SOURCES}
 	${CC} -m32 ${CFLAGS} -c ${SOURCES}
-	ld -melf_i386 -dynamic-linker /lib/ld-linux.so.2 ${OBJS} /usr/lib32/libSDL.so /usr/lib32/libGL.so /usr/lib32/libpthread.so /usr/lib32/libc.so /usr/lib32/libasound.so -o ${NAME}.elf
+	ld -melf_i386 -dynamic-linker /lib/ld-linux.so.2 ${OBJS} /usr/lib32/libSD2L.so /usr/lib32/libGL.so /usr/lib32/libpthread.so /usr/lib32/libc.so /usr/lib32/libasound.so -o ${NAME}.elf
 	@make ${NAME}
 
 native: ${SOURCES}
 	${CC} ${CFLAGS} -c ${SOURCES}
-	ld -dynamic-linker ${LDLINUX} ${OBJS} /usr/lib/libSDL.so /usr/lib/libGL.so /usr/lib/libpthread.so /lib/libc.so.6 /usr/lib/libasound.so -o ${NAME}.elf
+	ld -dynamic-linker ${LDLINUX} ${OBJS} /usr/lib/libSDL2.so /usr/lib/libGL.so /usr/lib/libpthread.so /lib/libc.so.6 /usr/lib/libasound.so -o ${NAME}.elf
 	@make ${NAME}
 
 ${NAME}: ${NAME}.elf
