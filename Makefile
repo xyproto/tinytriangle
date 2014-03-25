@@ -7,7 +7,7 @@ CFLAGS = -Os -ffast-math -fno-inline -fomit-frame-pointer -nostdlib #-fpeephole2
 SOURCES = util.s main.c
 OBJS = util.o main.o
 HEADERSCRIPT = header.sh
-CC = clang #gcc
+CC = gcc
 
 UNAMEM := $(shell uname -m)
 ifeq ($(UNAMEM),x86_64)
